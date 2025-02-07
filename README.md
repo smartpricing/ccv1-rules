@@ -14,20 +14,47 @@ Once you have performed one or more tests, you will be able to see your detailed
 
 The score calculation will take into account the number of correct requests made within the time unit, the number of incorrect requests, and the number of attempts made by the user.
 
-The score is calculated as follows:
+The score is calculated as follows (the higher the better):
 
 ```js
 score = ((number_of_request_completed_in_interval / 10^6) + 10^6 / (test_count)) / (1 - number_of_wrong_results)
 ```
 
+![Infra](assets/infra.png?raw=true "Infra")
+
+### Locally develop your solution
+
 In order to test the correctness of your application server, do this test (on your local machine):
 
 ```sh
-curl -X POST -H 'Content-Type: application/json' -d '{"numbers":"1"}' 0.0.0.0:3000/collatz
+curl -X POST -H 'Content-Type: application/json' -d '{"numbers":"1", "requestId": "XXX-XXX-XXX-XXX"}' 0.0.0.0:3000/collatz
 ```
 
-![Infra](assets/infra.png?raw=true "Infra")
+Must return (for instance):
 
+Status code: 
+
+```sh
+HTTP/1.1 200 OK
+```
+
+Headers:
+
+```sh
+Content-Type: application/json;charset=utf-8
+Date: Fri, 07 Feb 2025 07:47:55 GMT
+Content-Length: 52
+```
+
+Body:
+
+```sh
+{"output":[1,4,2,1],"requestId":"XXX-XXX-XXX-XXX"}
+```
+
+### Load test info
+
+The loader machine will target your VM with millions of request, using multiple connections, for a time interval of 30 seconds, with an initial warmup time of 3 seconds.
 
 ## Setup the test enviroment
 
@@ -98,6 +125,9 @@ To retrive the global leaderboard:
 
 ```sh
 curl -X GET -H "Authorization: Bearer $SP_TOKEN" 10.114.16.2:2999/cc/v1/leaderboard
+
+alice.setti@smartpricing.it	1000	2025-02-06T09:07:54.048Z	1367min ago
+aliceviola@smartpricing.it	900		2025-02-06T09:08:43.325Z	1367min ago
 ```
 
 To retrive only your test statistic:
@@ -112,10 +142,12 @@ All the loader machine endpoints are rate limited by IP:
 
 
 ```sh
-/cc/v1/register []
-/cc/v1/test []
-/cc/v1/run []
-/cc/v1/leaderboard []
-/cc/v1/my []
+/cc/v1/register [1 request/minute]
+/cc/v1/test [10 request/minute]
+/cc/v1/run [1 request/minute]
+/cc/v1/leaderboard [1 request/minute]
+/cc/v1/my [1 request/minute]
 ```
+
+You should develop and test a lot on your local machine, try to find the best solution in order to achieve the goal. Try different approches/technologies.
 
