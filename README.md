@@ -1,5 +1,7 @@
 # V1 Coding Challenge Rules
 
+## Overview
+
 This coding challenge consists of creating an HTTP application server (bindend on port 3000) that exposes a POST route, which takes an integer as input and computes its Collatz conjecture, returning the result. The application must be deployed on a virtual machine, with the goal of maximizing the number of requests per second that the server can handle.
 
 **The choice of programming language or framework is entirely up to you.**
@@ -23,6 +25,9 @@ In order to test the correctness of your application server, do this test (on yo
 ```sh
 curl -X POST -H 'Content-Type: application/json' -d '{"numbers":"1"}' 0.0.0.0:3000/collatz
 ```
+
+![Infra](assets/infra.png?raw=true "Infra")
+
 
 ## Setup the test enviroment
 
@@ -49,7 +54,7 @@ You will be able to connect to the machine via ssh. All other ports (to and from
 
 ### 2. Register yourself to the challenge server
 
-Once inside the VM, first find your IP address (note that these machines can hae multiple network interfaces and you will find both the internal VPC address and the public one, use the internal).
+Once inside the VM, first find your IP address (note that these machines can have multiple network interfaces and you will find both the internal VPC address and the public one, use the internal).
 
 There is a global registration token that you have to use only to register your machine to the loader machine.
 
