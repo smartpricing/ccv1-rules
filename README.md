@@ -74,9 +74,11 @@ The loader machine will target your VM with millions of request, using multiple 
 
 ### 1. Create the VM on DO
 
+The first step is to upload your public ssh key on DO (who has already done it, this step is not mandatory):
+
 ```sh
 export DIGITALOCEAN_TOKEN=XXX # I will provide the token
-export SSH_PUB_KEY_NAME=XXX-coding-challenge # Replace with meaningful name
+export SSH_PUB_KEY_NAME=XXX-coding-challenge # Replace with a meaningful name
 export SSH_PUB_KEY=ssh-rsa XXXX # Replace with your id_rsa.pub, for instance: ssh-rsa ds+Zt6kvJ95dkWE2YteQhG5OkNVFgmGKeQNgZ0kURM9feeLyYtwNNG1Lynttb9pqo1u93CH+cRuxNo/cAHsgcMd6KAQ9d1k4+dssd+L/JK3e8xqK+oM3wnT+dsdsd+dsdsds/Kx1UK/09FJfhurBTrWQvcrvtF6WriVdy90rHcrVPw08wTxDhK/+qkSNW4W/dsds+una8pV8gMorNdDEnAXix5B6AbKZnVpZOGTiiglfQYRO8GCVO6LV3EnPXkrxWbFp1nwuCxw6mIB1nbGmp6j4pVi9llKzkOJ7ZyBzrujfP5Ewr6EjQWUoovRfEPMD2VLrl8hpqX4+A8= as@alice-MacBook-Air.local
 
 
@@ -86,19 +88,19 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGI
 Get your ssh public key fingerprint:
 
 ```sh
-ssh-keygen -l -E md5 -f /Users/as/.ssh/id_rsa.pub
+ssh-keygen -l -E md5 -f $HOME/.ssh/id_rsa.pub
 ```
 
 Create the specified VM on the coding challenge vpc:
 
 ```sh
 export VM_NAME=cc-alice-test-v2
-export SSH_FINGERPRINT=7f:55:d5:49:c1:f4:77:a6:34:26:aa:94:c8:75:67:d0
+export SSH_FINGERPRINT=XXX # For instance: 7a:55:23:49:c4:11:77:a6:34:26:23:94:c1:75:67:11 - Remove the first "MD5:" part if ssh-keygen print it
 
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" -d '{"name":"'$VM_NAME'","region":"fra1","size":"s-1vcpu-1gb","image":"ubuntu-20-04-x64","ssh_keys":["'$SSH_FINGERPRINT'"],"backups":false,"ipv6":false,"monitoring":false,"tags":["coding-challenge"],"vpc_uuid":"1f542d99-824b-447e-ad22-c5afe2448833"}' "https://api.digitalocean.com/v2/droplets" 
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" -d '{"name":"'$VM_NAME'","region":"fra1","size":"c-4-intel","image":"ubuntu-22-04-x64","ssh_keys":["'$SSH_FINGERPRINT'"],"backups":false,"ipv6":false,"monitoring":false,"tags":["coding-challenge"],"vpc_uuid":"1f542d99-824b-447e-ad22-c5afe2448833"}' "https://api.digitalocean.com/v2/droplets" 
 ```
 
-Once you have create the machine, you can use this curl request in order to get the machine IP addresses:
+Once you have created the machine, you can use this curl request in order to get the machine IP addresses:
 
 ```sh
 export VM_ID=XXX # Retrive this from the previous json response at *droplet.id*
