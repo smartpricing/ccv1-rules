@@ -56,7 +56,7 @@ Body (request_id | steps):
 d2442ec6-0ae6-4b20-a9a7-4265ca8ec180|13
 ```
 
-You need also a route to return the number of request received for a *run_id*:
+**You need also a route to return the number of request received for a *run_id***:
 
 curl -X GET http://0.0.0.0:3000/reqs/938151bf-4c3b-4099-b6b7-582e2e972641
 
@@ -146,7 +146,7 @@ curl -X POST -H "Authorization: Bearer $SP_TOKEN" http://10.114.16.2:2999/cc/v1/
 
 In case of succesful request the response will be:
 
-```sh
+```json
 {"error":null,"connected":true,"response":"1|0"}
 ```
 
@@ -155,6 +155,14 @@ In case of succesful request the response will be:
 ```sh
 curl -X POST -H "Authorization: Bearer $SP_TOKEN" 10.114.16.2:2999/cc/v1/run
 ```
+
+In case of succesful request the response will be:
+
+```json
+{"error":null}
+```
+
+In case of succesful request the response will be:
 
 ## Leaderboard
 
@@ -172,6 +180,9 @@ To retrive only your test statistic (ordered by score):
 ```sh
 curl -X GET -H "Authorization: Bearer $SP_TOKEN" 10.114.16.2:2999/cc/v1/my
 ```
+
+Response:
+
 ```json
 {"user":"alice.setti@smartpricing.it","date":"2025-02-07T20:24:54.246Z","result":{"url":"http://0.0.0.0:3000","connections":1,"sampleInt":1,"pipelining":1,"workers":1,"duration":4.45,"samples":24,"start":"2025-02-07T20:24:49.400Z","finish":"2025-02-07T20:24:53.850Z","errors":0,"timeouts":0,"mismatches":1,"non2xx":0,"resets":0,"1xx":0,"2xx":1,"3xx":0,"4xx":0,"5xx":0,"statusCodeStats":{"200":{"count":1}},"latency":{"average":1,"mean":1,"stddev":1,"min":1,"max":1,"p0_001":0,"p0_01":0,"p0_1":0,"p1":0,"p2_5":0,"p10":0,"p25":0,"p50":1,"p75":1,"p90":3,"p97_5":1,"p99":1,"p99_9":1,"p99_99":1,"p99_999":1,"totalCount":1},"requests":{"average":1.34,"mean":1.1,"stddev":1.1,"min":1,"max":1,"total":1,"p0_001":1,"p0_01":1,"p0_1":1,"p1":1,"p2_5":1,"p10":1,"p25":1,"p50":1,"p75":1,"p90":1,"p97_5":1,"p99":1,"p99_9":1,"p99_99":1,"p99_999":1,"sent":1},"throughput":{"average":1,"mean":1,"stddev":1.04,"min":1,"max":1,"total":1,"p0_001":1,"p0_01":1,"p0_1":1,"p1":1,"p2_5":1,"p10":1,"p25":1,"p50":1,"p75":1,"p90":1,"p97_5":1,"p99":1,"p99_9":1,"p99_99":1,"p99_999":1}},"score":0.1}
 ```
