@@ -74,7 +74,7 @@ The loader machine will target your VM with millions of request, using multiple 
 
 ### 1. Create the VM on DO
 
-The first step is to upload your public ssh key on DO (who has already done it, this step is not mandatory):
+The first step is to upload your public ssh key on DO (for who has already an ssh key on DO, this step is not mandatory):
 
 ```sh
 export DIGITALOCEAN_TOKEN=XXX # I will provide the token
@@ -94,7 +94,7 @@ ssh-keygen -l -E md5 -f $HOME/.ssh/id_rsa.pub
 Create the specified VM on the coding challenge vpc:
 
 ```sh
-export VM_NAME=cc-alice-test-v2
+export VM_NAME=XXX # Choose your machine name, please insert your name/surname in some way
 export SSH_FINGERPRINT=XXX # For instance: 7a:55:23:49:c4:11:77:a6:34:26:23:94:c1:75:67:11 - Remove the first "MD5:" part if ssh-keygen print it
 
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DIGITALOCEAN_TOKEN" -d '{"name":"'$VM_NAME'","region":"fra1","size":"c-4-intel","image":"ubuntu-22-04-x64","ssh_keys":["'$SSH_FINGERPRINT'"],"backups":false,"ipv6":false,"monitoring":false,"tags":["coding-challenge"],"vpc_uuid":"1f542d99-824b-447e-ad22-c5afe2448833"}' "https://api.digitalocean.com/v2/droplets" 
@@ -121,9 +121,9 @@ There is a global registration token that you have to use only to register your 
 *token*
 
 ```sh
-export SP_EMAIL="XXX@smartpricing.it"
-export SP_REGISTRATION_TOKEN="YYY"
-export SP_TEST_MACHINE_IP=Z.Z.Z.Z
+export SP_EMAIL="XXX@smartpricing.it" # This is your email
+export SP_REGISTRATION_TOKEN="XXX" # I Will provide it
+export SP_TEST_MACHINE_IP=Z.Z.Z.Z # This is your VM IP
 ```
 
 Register to the loader machine:
@@ -139,7 +139,7 @@ and save the returned personal token that you will have to use in all other requ
 Once your application server is up and running on the VM, you can try the connection between the loader machine and your VM:
 
 ```sh
-export SP_TOKEN="AAA"
+export SP_TOKEN="XXX" # Printend by the register route above
 
 curl -X POST -H "Authorization: Bearer $SP_TOKEN" http://10.114.16.2:2999/cc/v1/test
 ```
